@@ -1,5 +1,4 @@
 
-
 import mongoose from "mongoose";
 
 //Schema, reglas de como queremos grabar la informacion
