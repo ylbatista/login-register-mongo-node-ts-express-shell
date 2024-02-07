@@ -20,6 +20,8 @@ export class EmailService {
     mailerService: string,
     mailerEmail: string,
     senderEmailPassword: string,
+    //para no enviar correo electronico
+    private readonly postToProvider: boolean,
   ) {
     this.transporter = nodemailer.createTransport( {
       service: mailerService,
@@ -40,6 +42,8 @@ export class EmailService {
     const { to, subject, htmlBody, attachements = [] } = options;
 
     try {
+      if ( !this.postToProvider ) return true;
+
       const sentInformation = await this.transporter.sendMail( {
         to: to,
         subject: subject,
