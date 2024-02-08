@@ -1,11 +1,10 @@
  //controlador encargado de dar la respuesta al cliente
 
 import { Request, Response } from "express";
-import { CreateCategoryDto, CustomError } from "../../domain/domain.index";
+import { CreateCategoryDto, CustomError, PaginationDto } from "../../domain/domain.index";
 import { AuthService } from "../services/auth.service";
 import { CategoryService } from "../services/category.service";
  
-
 export class CategoryController {
     //DI dependency injections 
     constructor(
@@ -31,8 +30,16 @@ export class CategoryController {
     };
 
     getCategories = async( req: Request, res: Response ) => {
-        this.categoryService.getCategories()
+        
+        const { page = 1, limit = 10 } = req.query;
+        const [ error, paginationDto ] = PaginationDto.create( +page, +limit );
+        if ( error ) return res.status(400).json({ error });
+
+        // res.json( paginationDto );
+        this.categoryService.getCategories( paginationDto! )
             .then( categories => res.json( categories ))
             .catch( error => this.handleError( error, res ) );
     };
 } 
+
+
