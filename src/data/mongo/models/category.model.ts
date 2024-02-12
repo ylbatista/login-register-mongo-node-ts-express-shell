@@ -4,24 +4,34 @@ import mongoose, { Schema } from "mongoose";
 //Schema, reglas de como queremos grabar la informacion
 //schema se importa de mongoose
 
-const categorySchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema( {
 
     name: {
-        type: String,
-        required: [true, 'Name is required'],
-        unique: true,
+      type: String,
+      required: [ true, 'Name is required' ],
+      unique: true,
     },
-
     available: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
-
+  
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        require: true
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     }
-});
-
+    
+  
+  } );
+  
+  
+  categorySchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function( doc, ret, options ) {
+      delete ret._id;
+    },
+  });
+  
 export const CategoryModel = mongoose.model('Category', categorySchema);

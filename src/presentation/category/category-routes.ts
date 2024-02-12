@@ -1,7 +1,8 @@
-import { Router } from 'express';
-import { CategoryController } from './category-controller';
-import { AuthMiddleware } from '../middlewares/auth.middleware';
-import { CategoryService } from '../services/category.service';
+import { Router } from "express";
+import { CategoryService } from "../services/category.service";
+import { CategoryController } from "./category-controller";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
+
 
 export class CategoryRoutes {
 
@@ -14,7 +15,7 @@ export class CategoryRoutes {
     
     // Definir las rutas
     router.get( '/', controller.getCategories );
-    router.post( '/', [ AuthMiddleware.validateJwt ], controller.createCategory );
+    router.post( '/', [ AuthMiddleware.validateJWT ], controller.createCategory );
 
     return router;
   }

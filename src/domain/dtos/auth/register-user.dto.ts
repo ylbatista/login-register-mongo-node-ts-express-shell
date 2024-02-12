@@ -9,8 +9,8 @@ export class RegisterUserDto {
         public password: string,
     ){}
 
-    static create(object: { [key:string]:any } ): [string?, RegisterUserDto?] {
-        const { name, email, password } = object;
+    static create(props: { [key:string]:any } ): [string?, RegisterUserDto?] {
+        const { name, email, password } = props;
 
         if( !name ) return ['Missing name'];
         if( !email ) return ['Missing email'];

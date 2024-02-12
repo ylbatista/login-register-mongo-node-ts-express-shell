@@ -4,39 +4,47 @@ import mongoose, { Schema } from "mongoose";
 //Schema, reglas de como queremos grabar la informacion
 //schema se importa de mongoose
 
-const productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema( {
 
     name: {
-        type: String,
-        required: [true, 'Name is required'],
-        unique: true,
+      type: String,
+      required: [ true, 'Name is required' ],
+      unique: true,
     },
-
     available: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
-
     price: {
-        type: Number,
-        default: 0,
+      type: Number,
+      default: 0
     },
-
     description: {
-        type: String,
+      type: String,
     },
-
+    
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        require: true
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     },
-
+  
     category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        require: true
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true
+    }
+    
+  
+  } );
+  
+  
+  productSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function( doc, ret, options ) {
+      delete ret._id;
     },
-});
+  });
 
 export const ProductModel = mongoose.model('Product', productSchema);

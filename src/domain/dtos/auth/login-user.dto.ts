@@ -8,8 +8,9 @@ export class LoginUserDto {
         public password: string,
     ){}
 
-    static create(object: { [key:string]:any } ): [string?, LoginUserDto?] {
-        const { email, password } = object;
+    static create(props: { [key:string]:any } ): [string?, LoginUserDto?] {
+        
+        const { email, password } = props;
 
         if( !email ) return ['Missing email'];
         if( !regularExps.email.test( email ) ) return ['Email is not valid'];

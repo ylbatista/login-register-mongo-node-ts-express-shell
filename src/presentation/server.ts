@@ -1,6 +1,14 @@
 import express, { Router } from 'express';
 import path from 'path';
 
+
+interface Options {
+  port: number;
+  routes: Router;
+  public_path?: string;
+}
+
+
 interface Options {
   port: number;
   routes: Router;
@@ -38,7 +46,7 @@ export class Server {
     //* Routes
     this.app.use( this.routes );
 
-    //* SPA /^\/(?!api).*/  <== Únicamente si no empieza con la palabra api
+    //* SPA
     this.app.get('*', (req, res) => {
       const indexPath = path.join( __dirname + `../../../${ this.publicPath }/index.html` );
       res.sendFile(indexPath);
